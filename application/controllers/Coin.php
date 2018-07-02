@@ -9,9 +9,9 @@ class Coin extends CI_Controller {
 	
 	public function index()
 	{
-		$exchange = $this->common_mdl->get_table_by('pair',array('exchange_name' => $this->uri->segment(2)),'id');
+		$exchange = $this->common_mdl->get_table_by('pairnew',array('exchange_name' => $this->uri->segment(2)),'id');
 		if(count($exchange) > 0) {
-			$data['exchange_data'] = $this->common_mdl->select('pair',array('exchange_name' => $this->uri->segment(2)));
+		$data['exchange_data'] = $this->common_mdl->query('SELECT *,(quotevolume*base_usd) as volume ,(close*base_usd) as price FROM `pairnew` WHERE `exchange_name` = "'.$this->uri->segment(2).'"');
 			$this->load->view('coin_view',$data);
 		}
 		else {
